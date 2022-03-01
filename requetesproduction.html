@@ -1,0 +1,162 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
+    <title>Esri Leaflet</title>
+
+    <!-- Load Leaflet from CDN -->
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+      integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+      crossorigin=""
+    />
+    <script
+      src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+      integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+      crossorigin=""
+    ></script>
+
+    <!-- Load Esri Leaflet from CDN -->
+    <script src="https://unpkg.com/esri-leaflet@3.0.4/dist/esri-leaflet.js"></script>
+    <script src="https://unpkg.com/esri-leaflet-vector@3.0.0/dist/esri-leaflet-vector.js"></script>
+ <script src="https://unpkg.com/esri-leaflet@3.0.4/dist/esri-leaflet.js"></script>
+    <script src="https://unpkg.com/esri-leaflet-vector@3.0.0/dist/esri-leaflet-vector.js"></script>
+
+    <script src="https://unpkg.com/leaflet-editable@1.2.0/src/Leaflet.Editable.js"></script>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+      }
+      #map {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        right: 0;
+        left: 0;
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 14px;
+        color: #323232;
+      }
+   
+    </style>
+  </head>
+
+  <body>
+    <div id="map"></div>
+
+    <script>
+
+      const apiKey = "AAPKce7bdb0fd5d24a48b2393822e0c702f4JPahJW_HDCd7a4pP05ESaGca4M4jW8rReiLyPjPP2vFJ5K70UgiRBossQ3R6nzC9";
+
+      // const basemapEnum = "ArcGIS:Streets";
+
+      const map = L.map("map", {
+        minZoom: 2
+      }).setView([29.721838257352903, -9.096301126715293], 6);
+
+      // L.esri.Vector.vectorBasemapLayer(basemapEnum, {
+      //   apiKey: apiKey
+      // }).addTo(map);
+
+      const basemapLayers = {
+        Streets: L.esri.Vector.vectorBasemapLayer("ArcGIS:Streets", { apiKey: apiKey }).addTo(map),
+        Navigation: L.esri.Vector.vectorBasemapLayer("ArcGIS:Navigation", { apiKey: apiKey }).addTo(map),
+        Topographic: L.esri.Vector.vectorBasemapLayer("ArcGIS:Topographic", { apiKey: apiKey }).addTo(map),
+        "Light Gray": L.esri.Vector.vectorBasemapLayer("ArcGIS:LightGray", { apiKey: apiKey }).addTo(map),
+        "Streets Relief": L.esri.Vector.vectorBasemapLayer("ArcGIS:StreetsRelief", { apiKey: apiKey }).addTo(map),
+        Imagery: L.esri.Vector.vectorBasemapLayer("ArcGIS:Imagery", { apiKey: apiKey }).addTo(map),
+       
+      };
+
+      L.control.layers(basemapLayers, null, { collapsed: false }).addTo(map);
+
+      var regions = L.esri.featureLayer({
+                url: "https://services3.arcgis.com/RYJD4BItRgLmP5Zw/arcgis/rest/services/regions/FeatureServer/0",
+                    style: {
+                    color: '#fa9fb5',
+                    weight: 1,
+                    opacity: 1
+                    }
+                }).addTo(map);
+        // Create the select dropdown and add to the top-right of the map
+        L.Control.QueryControl = L.Control.extend({
+          onAdd: function (map) {
+            // Array of query where clauses
+            const whereClauses = [
+              "cliquez sur votre choix :",
+
+              "classement = 'première en production de Mais'",
+              "classement = 'première en production de lentille'",
+              "classement = 'première en production de légumineuse'",
+              "classement = 'ne réalise aucune production'",
+             
+              
+
+              
+            ];
+
+
+            // Create select
+            const select = L.DomUtil.create("select", "");
+            select.setAttribute("id", "whereClauseSelect");
+            select.setAttribute("style", "font-size: 16px;padding:4px 8px;");
+            whereClauses.forEach(function (whereClause) {
+              let option = L.DomUtil.create("option");
+              option.innerHTML = whereClause;
+              select.appendChild(option);
+            });
+            return select;
+          },
+  
+          onRemove: function (map) {
+            // Nothing to do here
+          }
+        });
+  
+        L.control.queryControl = function (opts) {
+          return new L.Control.QueryControl(opts);
+        };
+  
+        L.control
+          .queryControl({
+            position: "topright"
+          })
+          .addTo(map);
+
+      // Add the Feature Layer to the map
+      const parcels = L.esri.featureLayer({
+  url: "https://services3.arcgis.com/TAYVKv0kDkNIc4Ej/arcgis/rest/services/classement2/FeatureServer/0",
+            simplifyFactor: 0.5,
+            precision: 4,
+            where: "1 = 0",
+            pointToLayer: (geojson, latlng) => {
+            return L.geojson(latlng);
+            }
+            
+            })
+          .addTo(map);
+
+      // Setup the Popup
+      parcels.bindPopup(function (layer) {
+        return L.Util.template("<b>Région : {region}</b>", layer.feature.properties);
+      });
+
+      // When the selected where clause changes, set the filter on the layer
+      const select = document.getElementById("whereClauseSelect");
+      select.addEventListener("change", () => {
+        if (select.value !== "") {
+          parcels.setWhere(select.value);
+        }
+      });
+
+      
+
+
+
+
+      
+    </script>
+  </body>
+</html>

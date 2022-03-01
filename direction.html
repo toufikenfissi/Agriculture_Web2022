@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <title>direction-agricole</title>
+    <link rel="icon" type="image/jpg" href="centre-agri.png" />
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="shortcut icon" type="image/x-icon" href="docs/images/favicon.ico">
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+        integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+        crossorigin="">
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+        integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+        crossorigin=""></script>
+    <script type="text/javascript" src="principaux_villages.js"></script>
+    <script type="text/javascript" src="waterwayss.js"></script>
+    <script type="text/javascript" src="coucheregion.geojson"></script>
+    <script src="https://cdn-geoweb.s3.amazonaws.com/esri-leaflet/0.0.1-beta.5/esri-leaflet.js"></script>
+
+    <script src="https://cdn-geoweb.s3.amazonaws.com/esri-leaflet-geocoder/0.0.1-beta.5/esri-leaflet-geocoder.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="https://cdn-geoweb.s3.amazonaws.com/esri-leaflet-geocoder/0.0.1-beta.5/esri-leaflet-geocoder.css">
+    <style>
+        html,
+        body {
+            height: 100%;
+            margin: 0;
+        }
+
+        .leaflet-container {
+            height: 400px;
+            width: 600px;
+            max-width: 100%;
+            max-height: 100%;
+        }
+    </style>
+
+
+</head>
+
+<body>
+
+    <div id="map"
+        class="leaflet-container leaflet-touch leaflet-retina leaflet-fade-anim leaflet-grab leaflet-touch-drag leaflet-touch-zoom"
+        tabindex="0" style="position: relative;">
+        <div class="leaflet-pane leaflet-map-pane" style="transform: translate3d(-107px, 0px, 0px);">
+            <div class="leaflet-pane leaflet-tile-pane">
+                <div class="leaflet-layer " style="z-index: 1; opacity: 1;">
+                    <div class="leaflet-tile-container leaflet-zoom-animated"
+                        style="z-index: 18; transform: translate3d(0px, 0px, 0px) scale(1);"><img alt=""
+                            role="presentation"
+                            src="https://api.mapbox.com/styles/v1/mapbox/light-v9/tiles/9/106/193?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw"
+                            class="leaflet-tile leaflet-tile-loaded"
+                            style="width: 512px; height: 512px; transform: translate3d(-49px, -482px, 0px); opacity: 1;"><img
+                            alt="" role="presentation"
+                            src="https://api.mapbox.com/styles/v1/mapbox/light-v9/tiles/9/107/193?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw"
+                            class="leaflet-tile leaflet-tile-loaded"
+                            style="width: 512px; height: 512px; transform: translate3d(463px, -482px, 0px); opacity: 1;"><img
+                            alt="" role="presentation"
+                            src="https://api.mapbox.com/styles/v1/mapbox/light-v9/tiles/9/106/194?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw"
+                            class="leaflet-tile leaflet-tile-loaded"
+                            style="width: 512px; height: 512px; transform: translate3d(-49px, 30px, 0px); opacity: 1;"><img
+                            alt="" role="presentation"
+                            src="https://api.mapbox.com/styles/v1/mapbox/light-v9/tiles/9/107/194?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw"
+                            class="leaflet-tile leaflet-tile-loaded"
+                            style="width: 512px; height: 512px; transform: translate3d(463px, 30px, 0px); opacity: 1;">
+                    </div>
+                </div>
+            </div>
+            <div class="leaflet-pane leaflet-shadow-pane"><img
+                    src="https://unpkg.com/leaflet@1.7.1/dist/images/marker-shadow.png"
+                    class="leaflet-marker-shadow leaflet-zoom-animated" alt=""
+                    style="margin-left: -12px; margin-top: -41px; width: 41px; height: 41px; transform: translate3d(278px, 314px, 0px);"><img
+                    src="https://unpkg.com/leaflet@1.7.1/dist/images/marker-shadow.png"
+                    class="leaflet-marker-shadow leaflet-zoom-animated" alt=""
+                    style="margin-left: -12px; margin-top: -41px; width: 41px; height: 41px; transform: translate3d(300px, 191px, 0px);"><img
+                    src="https://unpkg.com/leaflet@1.7.1/dist/images/marker-shadow.png"
+                    class="leaflet-marker-shadow leaflet-zoom-animated" alt=""
+                    style="margin-left: -12px; margin-top: -41px; width: 41px; height: 41px; transform: translate3d(438px, 200px, 0px);"><img
+                    src="https://unpkg.com/leaflet@1.7.1/dist/images/marker-shadow.png"
+                    class="leaflet-marker-shadow leaflet-zoom-animated" alt=""
+                    style="margin-left: -12px; margin-top: -41px; width: 41px; height: 41px; transform: translate3d(125px, 163px, 0px);">
+            </div>
+            <div class="leaflet-pane leaflet-overlay-pane"></div>
+            <div class="leaflet-pane leaflet-marker-pane"><img
+                    src="https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon-2x.png"
+                    class="leaflet-marker-icon leaflet-zoom-animated leaflet-interactive" alt="" tabindex="0"
+                    style="margin-left: -12px; margin-top: -41px; width: 25px; height: 41px; transform: translate3d(278px, 314px, 0px); z-index: 314;"><img
+                    src="https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon-2x.png"
+                    class="leaflet-marker-icon leaflet-zoom-animated leaflet-interactive" alt="" tabindex="0"
+                    style="margin-left: -12px; margin-top: -41px; width: 25px; height: 41px; transform: translate3d(300px, 191px, 0px); z-index: 191;"><img
+                    src="https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon-2x.png"
+                    class="leaflet-marker-icon leaflet-zoom-animated leaflet-interactive" alt="" tabindex="0"
+                    style="margin-left: -12px; margin-top: -41px; width: 25px; height: 41px; transform: translate3d(438px, 200px, 0px); z-index: 200;"><img
+                    src="https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon-2x.png"
+                    class="leaflet-marker-icon leaflet-zoom-animated leaflet-interactive" alt="" tabindex="0"
+                    style="margin-left: -12px; margin-top: -41px; width: 25px; height: 41px; transform: translate3d(125px, 163px, 0px); z-index: 163;">
+            </div>
+            <div class="leaflet-pane leaflet-tooltip-pane"></div>
+            <div class="leaflet-pane leaflet-popup-pane"></div>
+            <div class="leaflet-proxy leaflet-zoom-animated"
+                style="transform: translate3d(54621px, 99498px, 0px) scale(512);"></div>
+        </div>
+        <div class="leaflet-control-container">
+            <div class="leaflet-top leaflet-left">
+                <div class="leaflet-control-zoom leaflet-bar leaflet-control"><a class="leaflet-control-zoom-in"
+                        href="#" title="Zoom in" role="button" aria-label="Zoom in">+</a><a
+                        class="leaflet-control-zoom-out" href="#" title="Zoom out" role="button"
+                        aria-label="Zoom out">−</a></div>
+            </div>
+            <div class="leaflet-top leaflet-right">
+                <div class="leaflet-control-layers leaflet-control" aria-haspopup="true"><a
+                        class="leaflet-control-layers-toggle" href="#" title="Layers"></a>
+                    <section class="leaflet-control-layers-list">
+                        <div class="leaflet-control-layers-base"><label>
+                                <div><input type="radio" class="leaflet-control-layers-selector"
+                                        name="leaflet-base-layers_45" checked="checked"><span> Grayscale</span></div>
+                            </label><label>
+                                <div><input type="radio" class="leaflet-control-layers-selector"
+                                        name="leaflet-base-layers_45"><span> Streets</span></div>
+                            </label></div>
+                        <div class="leaflet-control-layers-separator"></div>
+                        <div class="leaflet-control-layers-overlays"><label>
+                                <div><input type="checkbox" class="leaflet-control-layers-selector" checked=""><span>
+                                        direction</span></div>
+
+                            </label></div>
+                    </section>
+                </div>
+            </div>
+            <div class="leaflet-bottom leaflet-left"></div>
+            <div class="leaflet-bottom leaflet-right">
+                <div class="leaflet-control-attribution leaflet-control"><a href="https://leafletjs.com"
+                        title="A JS library for interactive maps">Leaflet</a> | Map data © <a
+                        href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a
+                        href="https://www.mapbox.com/">Mapbox</a></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        
+        var uniIcon = L.icon({
+            iconUrl: 'entreprise.png',
+        
+
+            iconSize: [20, 25], // size of the icon
+            iconAnchor: [8, 30], // point of the icon which will correspond to marker's location
+            popupAnchor: [-3, -76] // point from which the popup should open relative to the iconAnchor
+        });
+        var uniIconn = L.icon({
+            iconUrl: 'maison-ecologique.png',
+        
+
+            iconSize: [25, 25], // size of the icon
+            iconAnchor: [8, 30], // point of the icon which will correspond to marker's location
+            popupAnchor: [-3, -76] // point from which the popup should open relative to the iconAnchor
+        });
+
+        var direction = L.layerGroup();
+
+        var mLittleton = L.marker([33.98697666060681, -6.81598479452323], { icon: uniIcon }).bindPopup('Direction Provincial de lagriculture DPA rabat').addTo(direction);
+        var mDenver = L.marker([34.01837254401522, -6.8290941490247095], { icon: uniIcon }).bindPopup('Ministère Agriculture et Pêche Maritime').addTo(direction);
+        var mAurora = L.marker([34.0071035621727, -6.864537959343529], { icon: uniIcon }).bindPopup('Direction Irrigation et Aménagement - Espace Agricole -').addTo(direction);
+        var mAuror = L.marker([34.281733666796306, -6.587434464094541], { icon: uniIcon }).bindPopup('direction regionale du conseil agricole Rabat-salé-kénitra').addTo(direction);
+        var mAuro = L.marker([34.36593752032151, -5.697121272809706], { icon: uniIcon }).bindPopup('Direction Provinciale -agriculture De Sidi Kacem-').addTo(direction);
+        var mAur = L.marker([34.14800736900434, -5.0159689944944486], { icon: uniIcon }).bindPopup('Direction Provinciale D"Agriculture').addTo(direction);
+        var mAu = L.marker([34.034278724895245, -5.554299020904895], { icon: uniIcon }).bindPopup('Direction Régionale d"Agriculture').addTo(direction);
+        var mA = L.marker([33.564109203343634, -5.208229718212465], { icon: uniIcon }).bindPopup('Direction provinciale d"agriculture').addTo(direction);
+       
+        var mou = L.marker([33.552668141343844, -7.516250221231455], { icon: uniIcon }).bindPopup('Direction Provinciale Agriculture Berrechid').addTo(direction);
+        var moui = L.marker([31.870385150808286, -8.076552901781104], { icon: uniIcon }).bindPopup('direction regionale d"agriculture MARRAKECH').addTo(direction);
+
+
+        var mbAttr = 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>';
+        var mbUrl = 'https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw';
+
+        var grayscale = L.tileLayer(mbUrl, { id: 'mapbox/light-v9', tileSize: 512, zoomOffset: -1, attribution: mbAttr });
+        var streets = L.tileLayer(mbUrl, { id: 'mapbox/streets-v11', tileSize: 512, zoomOffset: -1, attribution: mbAttr });
+
+        var principaux_villages = L.geoJson(principaux_villages, {
+            pointToLayer: function (feature, latlng) {
+                return L.marker(latlng, { icon: uniIconn });
+            },
+        });
+        var map = L.map('map', {
+            center: [32.1347866010968, -7.311743148506111],
+            zoom: 5.5,
+            layers: [grayscale, direction, principaux_villages]
+        });
+        
+        L.control.scale().addTo(map);
+
+        // search 
+        var searchControl = new L.esri.Controls.Geosearch().addTo(map);
+
+        var results = new L.LayerGroup().addTo(map);
+
+        searchControl.on('results', function(data){
+            results.clearLayers();
+            for (var i = data.results.length - 1; i >= 0; i--) {
+            results.addLayer(L.marker(data.results[i].latlng));
+            }
+        });
+
+  
+
+        var baseLayers = {
+            'Grayscale': grayscale,
+            'Streets': streets
+        };
+        var myStyle = {
+            "color": "#0570b0",
+            "weight": 1,
+            "opacity": 0.65
+        };
+        var myStyle2 = {
+            "color": "#ece7f2",
+            "weight": 1,
+            "opacity": 0.4
+        };
+
+        var geojson = L.geoJSON(waterwayss, {
+            style: myStyle,
+            
+		}).addTo(map);
+        var overlays = {
+            'directions agricoles': direction,
+            'principaux villages': principaux_villages,
+            'riviere': geojson,
+            
+
+        };
+
+        var layerControl = L.control.layers(baseLayers, overlays).addTo(map);
+      
+        var geojson = L.geoJSON(coucheregion, {
+            style: myStyle2,
+            
+		}).addTo(map);
+    </script>
+
+
+
+
+
+</body>
+
+</html>

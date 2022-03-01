@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport"    content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="">
+	<meta name="author"      content="Sergey Pozhilov (GetTemplate.com)">
+	
+	<title>production légumineuses </title>
+    <link rel="icon" type="image/jpg" href="assets1/images/centre-agri.png" />
+	
+	
+	<!-- Bootstrap -->
+	<link href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.no-icons.min.css" rel="stylesheet">
+	<!-- Icons -->
+	<link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+	<!-- Fonts -->
+	<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Alice|Open+Sans:400,300,700">
+	<!-- Custom styles -->
+	<link rel="stylesheet" href="assets1/css/styles.css">
+
+	<!--[if lt IE 9]> <script src="assets/js/html5shiv.js"></script> <![endif]-->
+	<link rel="stylesheet" href="css1/leaflet.css" />
+	<script src="assets1/js/leaflet.js"></script>
+	<script src="assets1/js/jquery-3.6.0.js"></script>
+    <script src="assets1/js/leaflet-timeline-slider.js"></script>
+
+</head>
+
+	<!--a ajouter-->
+	<section class="section contact" data-section="section6">
+		<div class="container">
+		  <div class="row">
+			<div class="col-md-12">
+			  <div class="section-heading">
+			  </div>
+			</div>
+			<div class="col-md-6">
+	 <!--header-->
+
+<body class="home">
+ <!--header-->
+ <center><header class="main-header clearfix" role="header">
+    <div class="logo">
+      <a href="#"><em>Agri</em>MAP</a>
+    </div>
+    <a href="#menu" class="menu-link"><i class="fa fa-bars"></i></a>
+    <nav id="menu" class="main-nav" role="navigation">
+      <ul class="main-menu">
+        <li><a href="#section1">Home</a></li>
+        <li class="has-submenu"><a href="#section2">A Propos de Nous</a>
+          <ul class="sub-menu">
+            <li><a href="#section2">Types de cultures</a></li>
+            <li><a href="#section2">What we do?</a></li>
+            <li><a href="#section4">Qui Sommes-Nous? </a></li>
+            <li><a href="cereal.html" rel="sponsored" class="external">External URL</a></li>
+            <li><a href="https://templatemo.com/about" rel="sponsored" class="external">External URL</a></li>
+          </ul>
+        </li>
+        <li class="has-submenu"><a href="#section2">Cartes</a>
+          <ul class="sub-menu">
+            <li><a href="cereal.html" rel="sponsored" class="external">Carte de la production des Céréales</a></li>
+            <li><a href="legumes.html" rel="sponsored" class="external">Carte de la production des Légumineuses</a></li>
+            <li><a href="cartes symbole/bledur.html" rel="sponsored" class="external">Carte de la production du Blé Dur</a></li>
+            <li><a href="cartes symbole/bletendre.html" rel="sponsored" class="external">Carte de la production du Blé Tendre</a></li>
+            <li><a href="cartes symbole/feve.html" rel="sponsored" class="external">Carte de la production des Fèves </a></li>
+            <li><a href="cartes symbole/lentille.html" rel="sponsored" class="external">Carte de la production des Lentilles</a></li>
+          </ul>
+        </li>
+        <li class="has-submenu"><a href="#section2">Graphiques</a>
+          <ul class="sub-menu">
+            <li><a href="Graphique_cereale/index.html" rel="sponsored" class="external">Evolution des prix des Céréales</a></li>
+            <li><a href="graphique_legumineuse/index.html" rel="sponsored" class="external">Evolution des prix des Légumineuses</a></li>
+          </ul>
+        </li>
+        <!-- <li><a href="#section5">Video</a></li> -->
+        <li><a href="#section6">Contact</a></li>
+        <li><a href="https://templatemo.com" class="external">External</a></li>
+      </ul>
+    </nav>
+  </header></center>
+
+
+
+  
+
+<main id="main">
+
+	<div class="container">
+		
+		<div class="row section topspace">
+			<div class="col-md-12">
+				<center><p class="lead text-center text-muted" style="color: whitesmoke;">la production legumineuses par région au Maroc en % de production en 2017, 2018 et 2019</p></center>
+			</div>
+		</div> <!-- / section -->
+		
+		<div class="row section featured topspace">
+			<div class="row" id="main">
+				<style>
+					#map {
+						width: 1100px;
+						height: 900px;
+						margin: auto;
+					}
+			        .info {
+					    padding: 6px 8px;
+			            color: white;
+					    font: 14px/16px Arial, Helvetica, sans-serif;
+					    background: black;
+					    background: black;
+					    box-shadow: 0 0 15px rgba(0,0,0,0.2);
+					    border-radius: 5px;
+					}
+					.info h4 {
+					    margin: 0 0 5px;
+					    color: #71797E;
+					}
+			        .legend {
+			           line-height: 18px;
+			           color: #ffffff;
+			        }
+			        .legend i {
+			           width: 18px;
+			           height: 18px;
+			           float: left;
+			           margin-right: 8px;
+			           opacity: 1;
+					}
+					.col-left {
+					  flex: 1;
+					  margin-left: 10px;
+					}
+					.col-right {
+					  flex: 1.25;
+					  margin-right: 10px;
+					}
+			
+				</style>
+			    <div class="col-right">
+					<div id='map'></div>
+	                <script type="text/javascript" src="reg.js"></script>
+
+
+	                <script type="text/javascript">
+	            
+
+	                   var mymap = L.map('map').setView([28.876743441036815, -9.731532170860255], 6);
+	            
+	                   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+	                       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+	                   }).addTo(mymap);
+
+	                    var geoJson =L.geoJson(reg)
+	            
+	                    function getColor(attribut) {
+	                        return attribut > 25 ? '#bd0026' :
+	                               attribut > 20 ? '#f03b20' :
+	                               attribut > 15 ? '#fd8d3c' :
+	                               attribut > 10 ? '#fecc5c' :
+	                               attribut > 0 ? '#ffffb2' :
+	                                                    '#FFFFFF';
+	                    }
+	                    function stylisermonFeature(feature) {
+	                        return {
+				                weight: 2,
+				                opacity: 1,
+				                color: 'black',
+				                /*dashArray: '3',*/
+				                fillOpacity: 1,
+				                fillColor: getColor(feature.properties.leg)
+			                };
+		                }
+
+
+	            
+
+	                    function highlightFeature(e) {
+		                var layer = e.target;
+
+		                    layer.setStyle({
+		                    weight: 5,
+		                    color: '#666',
+		                    dashArray: '',
+		                    fillOpacity: 0.7
+		                });
+
+		                    if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
+		                    layer.bringToFront();
+		                    }
+		                    info.update(layer.feature.properties);
+
+		                }
+
+			            function resetHighlight(e) {
+			    	        geojson.resetStyle(e.target);
+			    	            info.update();
+
+				        }
+			            function zoomToFeature(e) {
+			                map.fitBounds(e.target.getBounds());
+			            }
+
+			            function onEachFeature(feature, layer) {
+			            layer.on({
+			                mouseover: highlightFeature,
+			                mouseout: resetHighlight,
+			                click: zoomToFeature,
+			        
+			            });
+	            
+	        
+			            }
+			            
+			        var info = L.control(); 
+			            
+
+			        info.onAdd = function (mymap) {
+			            this._div = L.DomUtil.create('div', 'info'); 
+			            this.update();
+			            return this._div;
+			        };
+
+
+			        info.update = function (props) {
+			            this._div.innerHTML = '<h4>Pays du Maroc</h4>' +  (props ?
+			                'Region : ' + props.region + '</b> <br />Légumineuses en % : ' + props.leg + '</sup>'
+			                : 'Vous êtes hors le secteur !');
+			        };
+
+			        info.addTo(mymap);
+
+			        getDataAddMarkers = function( {label, value, map, exclamation} ) {
+			                map.eachLayer(function (layer) {
+			                        if (layer instanceof L.Marker) {
+			                            map.removeLayer(layer);
+			                        }
+			                });
+
+			                filteredData = reg.features.filter(function (i, n) {
+			                    return i.properties.title===label;
+			                    });
+
+			                /*var markerArray = [];*/
+			                
+			                geojson = L.geoJson(filteredData, {
+			                    style: stylisermonFeature,
+			                    onEachFeature: onEachFeature,
+			                        /*content = `${exclamation} <br> ${feature.properties.content} `
+			                        var popup = L.popup().setContent(content);
+			                        layer.bindPopup(popup);
+			                        markerArray.push(layer);
+			                        layer.on({
+			                            mouseover: highlightFeature,
+			                            mouseout: resetHighlight,
+			        
+			                        })
+			                    }*/
+			                }).addTo(mymap);
+			                
+			                /*var markerGroup = L.featureGroup(markerArray);
+			                map.fitBounds(markerGroup.getBounds()).setZoom(8);*/
+			            };
+
+			            L.control.timelineSlider({
+			                timelineItems: ["2017", "2018", "2019"], 
+			                changeMap: getDataAddMarkers,
+			                extraChangeMapParams: {exclamation: "reg.feature.properties.region"} })
+			            .addTo(mymap);
+			            var legend = L.control({ position: "bottomright" });
+
+			        legend.onAdd = function (mymap) {
+			          var div = L.DomUtil.create("div", "info legend"),
+			            grades = [0, 5, 10, 15, 20, 25],
+			            labels = [];
+
+			  
+			          for (var i = 0; i < grades.length; i++) {
+			            div.innerHTML +=
+			            '<i style="background:' +
+			            getColor(grades[i] + 1) +
+			            '"></i> ' +
+			            grades[i] +
+			            (grades[i + 1] ? "&ndash;" + grades[i + 1] + "%" + '<br>' : '+' + "%");
+			          }
+
+			          return div;
+			        };
+
+			        legend.addTo(mymap);    
+
+
+			        </script>
+			    </div>
+			
+			</div>
+		</div> <!-- / section -->
+
+</main>
+
+
+
+
+
+<!-- JavaScript libs are placed at the end of the document so the pages load faster -->
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+<script src="assets1/js/template.js"></script>
+
+
+
+
+
+
+
+</body>
+</html>
+
+

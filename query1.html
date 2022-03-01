@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>Spatial Queries on a Feature Layer</title>
+  <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
+
+  <!-- Load Leaflet from CDN -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+    integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+    crossorigin=""/>
+  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+    integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+    crossorigin=""></script>
+
+  <!-- Load Esri Leaflet from CDN -->
+  <script src="https://unpkg.com/esri-leaflet@3.0.4/dist/esri-leaflet.js"
+    integrity="sha512-oUArlxr7VpoY7f/dd3ZdUL7FGOvS79nXVVQhxlg6ij4Fhdc4QID43LUFRs7abwHNJ0EYWijiN5LP2ZRR2PY4hQ=="
+    crossorigin=""></script>
+
+  <!-- Load Esri Leaflet Vector from CDN -->
+  <script src="https://unpkg.com/esri-leaflet-vector@3.1.1/dist/esri-leaflet-vector.js"
+    integrity="sha512-7rLAors9em7cR3/583gZSvu1mxwPBUjWjdFJ000pc4Wpu+fq84lXF1l4dbG4ShiPQ4pSBUTb4e9xaO6xtMZIlA=="
+    crossorigin=""></script>
+
+  <style>
+    body { margin:0; padding:0; }
+    #map { position: absolute; top:0; bottom:0; right:0; left:0; }
+  </style>
+</head>
+<body>
+
+<style>
+  #panel {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 1000;
+    background: white;
+    padding: 10px;
+  }
+</style>
+
+<div id="map"></div>
+<div class="col-right">
+    <div id='map'></div>
+    <script type="text/javascript" src="reg.js"></script>
+
+
+<div id="panel" class="leaflet-bar">
+  Neighborhoods
+  <select name="relation" id="relationSelect">
+    <option value="within">Within<options>
+    <option value="contains">Contains<options>
+    <option value="intersects">Intersects<options>
+    <option value="overlaps">Overlaps<options>
+  </select>
+  <select name="geometry" id="geometrySelect">
+    <option value="bounds">Bounds<options>
+    <option value="point">Point<options>
+    <option value="line">Line<options>
+    <option value="polygon">Polygon<options>
+  </select>
+  <button id="executeQuery">Run Query</button>
+</div>
+
+
+<script>
+  var map = L.map('map').setView([28.876743441036815, -9.731532170860255], 6);
+
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+	                       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+	                   }).addTo(map);
+
+	            
+
+ 
+
+  // create our layer
+  var geoJson =L.geoJson(reg).addTo(map);
+
+  // create a marker object to query against
+  var marker = L.marker([28.876743441036815, -9.731532170860255]).addTo(map);
+
+  // create a bounds object to query against
+  var bounds = L.latLngBounds([
+    [45.494556, -122.691536],
+    [45.538100, -122.608452]
+  ]);
+
+  // create a rectangle to visualize the bounds
+  L.rectangle(bounds, {
+    color: 'blue',
+    weight: 2
+  }).addTo(map);
+
+  // create a line to query against
+  var line = L.polyline([
+    [45.559256, -122.611885],
+    [45.502256, -122.562790],
+    [45.483244, -122.620468]
+  ], {
+    color: 'blue',
+    weight: 2
+  }).addTo(map);
+
+  // create a polygon to query against
+  var polygon = L.polygon([
+    [45.484894, -122.493696],
+    [45.512025, -122.492199],
+    [45.517669, -122.561457],
+    [45.487343, -122.558573]
+  ], {
+    color: 'blue',
+    weight: 2
+  }).addTo(map);
+
+  // collect geometries into an object so we can reference them later
+  var geometries = {
+    bounds: bounds,
+    line: line,
+    polygon: polygon,
+    point: marker
+  };
+
+  // get references to our <select> elements
+  var relationship = document.getElementById('relationSelect');
+  var geometry = document.getElementById('geometrySelect');
+  var runQueryButton = document.getElementById('executeQuery');
+
+  var previousIds = [];
+
+  // reset all features back to their regularly defined styles
+  function reset () {
+    for (var i = previousIds.length - 1; i >= 0; i--) {
+      nei.resetStyle(previousIds[i]);
+    }
+}
+  // query the API and highlight features
+  function query () {
+    reset();
+    // lookup our input geometry
+    var inputGeometry = geometries[geometry.value];
+
+    // query the service executing the selected relation with the selected input geometry
+    geoJson.query()[relationship.value](inputGeometry).ids(function (error, ids) {
+      // if there is an error with the query, you can handle it here
+      if (error) {
+        console.log('Error with query: ' + error);
+      } else if (ids) {
+        previousIds = ids;
+        for (var i = ids.length - 1; i >= 0; i--) {
+            geoJson.setFeatureStyle(ids[i], { color: 'red', weight: 2 });
+        }
+      }
+    });
+  }
+
+  // query when "Run Query" button is clicked
+  runQueryButton.addEventListener('click', query);
+
+  // once all neighborhoods have loaded run the default query
+  geoJson.once('load', function () {
+    query();
+  });
+</script>
+
+</body>
+</html>
